@@ -15,7 +15,7 @@ import os
 def printenv():
     logger = get_run_logger()
     logger.info(f"{os.getcwd()}")
-    entries = os.listdir('my_directory/')
+    entries = os.listdir(f"{os.getcwd()}/data")
     for entry in entries:
         logger.info(entry)
 

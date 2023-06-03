@@ -8,8 +8,13 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.metrics import mean_squared_error
 import mlflow
 import xgboost as xgb
-from prefect import flow, task
+from prefect import flow, task, get_run_logger
+import os
 
+@task(log_prints=True)
+def printenv():
+    logger = get_run_logger()
+    logger.info(f"{os.getcwd()}")
 
 @task(retries=3, retry_delay_seconds=2)
 def read_data(filename: str) -> pd.DataFrame:
@@ -115,7 +120,7 @@ def main_flow(
     val_path: str = "./data/green_tripdata_2021-02.parquet",
 ) -> None:
     """The main training pipeline"""
-
+    printenv()
     # MLflow settings
     mlflow.set_tracking_uri("sqlite:///mlflow.db")
     mlflow.set_experiment("nyc-taxi-experiment")

@@ -15,6 +15,9 @@ import os
 def printenv():
     logger = get_run_logger()
     logger.info(f"{os.getcwd()}")
+    entries = os.listdir('my_directory/')
+    for entry in entries:
+        logger.info(entry)
 
 @task(retries=3, retry_delay_seconds=2)
 def read_data(filename: str) -> pd.DataFrame:
